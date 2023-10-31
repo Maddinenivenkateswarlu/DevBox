@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DevBoxModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DevBox.dbo.Cities' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Cities">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="CityName" />
+      <PropertyRef Name="StateName" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CityName" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="StateName" Type="varchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="States">
+    <Key>
+      <PropertyRef Name="StateName" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StateName" Type="varchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DevBox.dbo.User_Details' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="User_Details">
+    <Key>
+      <PropertyRef Name="Email" />
+      <PropertyRef Name="State" />
+      <PropertyRef Name="City" />
+      <PropertyRef Name="MobileNumber" />
+      <PropertyRef Name="ResumeUrl" />
+      <PropertyRef Name="PhotoUrl" />
+    </Key>
+    <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="State" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="City" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="MobileNumber" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ResumeUrl" Type="varchar(max)" Nullable="false" />
+    <Property Name="PhotoUrl" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsersRegistration">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="MobileNumber" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Cities__StateNam__5441852A">
+    <End Role="States" Type="Self.States" Multiplicity="1" />
+    <End Role="Cities" Type="Self.Cities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="States">
+        <PropertyRef Name="StateName" />
+      </Principal>
+      <Dependent Role="Cities">
+        <PropertyRef Name="StateName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+warning 6035: The relationship 'fk_Users_Email' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="fk_Users_Email" />-->
+  <EntityContainer Name="DevBoxModelStoreContainer">
+    <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsersRegistration" EntityType="Self.UsersRegistration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cities" EntityType="Self.Cities" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Cities].[ID] AS [ID], 
+    [Cities].[CityName] AS [CityName], 
+    [Cities].[StateName] AS [StateName]
+    FROM [dbo].[Cities] AS [Cities]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="User_Details" EntityType="Self.User_Details" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [User_Details].[Email] AS [Email], 
+    [User_Details].[State] AS [State], 
+    [User_Details].[City] AS [City], 
+    [User_Details].[MobileNumber] AS [MobileNumber], 
+    [User_Details].[ResumeUrl] AS [ResumeUrl], 
+    [User_Details].[PhotoUrl] AS [PhotoUrl]
+    FROM [dbo].[User_Details] AS [User_Details]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__Cities__StateNam__5441852A" Association="Self.FK__Cities__StateNam__5441852A">
+      <End Role="States" EntitySet="States" />
+      <End Role="Cities" EntitySet="Cities" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

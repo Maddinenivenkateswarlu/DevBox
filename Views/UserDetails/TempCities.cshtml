@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "TempCities";
+}
+
+<h2>TempCities</h2>
+
+< <div class="form-group">
+    @Html.Label("City", "City", new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownList("City", (SelectList)ViewBag.Cities, "Select a City", new { @class = "form-control" })
+        @Html.ValidationMessage("City", "", new { @class = "text-danger" })
+    </div>
+</div>
+
